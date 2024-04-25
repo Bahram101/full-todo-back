@@ -1,20 +1,21 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import todoRoutes from "./routes/todos.js";
 import { getAllTodos, createTodo } from "./controllers/TodoController.js";
 
 const app = express();
+dotenv.config();
+
+app.use(cors());
 app.use(express.json());
-dotenv.config() 
 
-// constants
-const PORT = process.env.PORT || 5555
-const DB_USER = process.env.DB_USER
-const DB_PASSWORD = process.env.DB_PASSWORD
-const DB_NAME = process.env.DB_NAME
-
-console.log(PORT)
-console.log(DB_USER)
+// Constants
+const PORT = process.env.PORT || 5555;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 mongoose
   .connect(
@@ -31,8 +32,8 @@ app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.get("/todos", getAllTodos);
-app.post("/todo", createTodo);
+//Routes
+app.use("/api/todos", todoRoutes);
 
 app.listen(PORT, (err) => {
   if (err) {
