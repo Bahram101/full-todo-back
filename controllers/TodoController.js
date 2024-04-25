@@ -1,6 +1,6 @@
 import TodoModel from "../models/Todo.js"
 
-export const getAll = async (req,res) =>{
+export const getAllTodos = async (req,res) =>{
     try {
         const todos = await TodoModel.find();
         res.json(todos)
@@ -9,7 +9,7 @@ export const getAll = async (req,res) =>{
     }
 }
 
-export const create = async (req, res) => {
+export const createTodo = async (req, res) => {
     try {
       const doc = new TodoModel({
         title: req.body.title,
