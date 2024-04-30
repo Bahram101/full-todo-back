@@ -32,3 +32,12 @@ export const getTodoById = async (req, res) => {
     res.status(500).json({ messages: "Что-то пошло не так." });
   }
 };
+
+export const removeTodo = async (req,res)=>{
+  try{
+    const todo = await Todo.findByIdAndDelete(req.params.id)
+    console.log('todo',todo)
+  }catch(err){
+
+  }
+}
