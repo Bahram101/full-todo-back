@@ -42,6 +42,36 @@ export const removeTodo = async (req, res) => {
     }
     res.json({ message: "Todo deleted successfully!" });
   } catch (err) {
-    res.status(500).json({message:'Failed to delete todo'})
+    res.status(500).json({ message: "Failed to delete todo" });
+  }
+};
+
+export const checkTodo = async (req, res) => {
+  const { id } = req.params;
+  const { completed } = req.body;
+  try {
+    const todo = await Todo.findByIdAndUpdate(id, { completed }, { new: true });
+    if (!todo) {
+      return res.status(404).json({ message: "Task not found!" });
+    }
+    res.json(todo);
+  } catch (error) {
+    res.status(500).json({ message: "Server error!" });
+  }
+};
+
+export const updateTodo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+    console.log('id',id)
+    console.log('title',title)
+    const todo = await Todo.findByIdAndUpdate(id, { title }, { new: true });
+    if (!todo) {
+      return res.status(404).json({ message: "Task not found!" });
+    }
+    res.json(todo);
+  } catch (error) {
+    res.status(500).json({ message: "Server error!" });
   }
 };
